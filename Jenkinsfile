@@ -20,4 +20,12 @@ pipeline {
 		}
         }
     }
+        stage('build Docker Image') {
+            steps {
+                script {
+                    image = docker.build("${IMAGE}")
+                    println "Newly generated image, " + image.id
+                }
+            }
+        }
 }
