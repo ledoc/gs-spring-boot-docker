@@ -44,7 +44,6 @@ pipeline {
                 	    image.push("LATEST")
                     }
                 }
-                currentBuild.result = "SUCCESS"
 	}
     }
 }
