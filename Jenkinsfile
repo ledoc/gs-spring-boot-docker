@@ -14,7 +14,6 @@ pipeline {
     }
     stages {
         stage('Build') {
-	    println "Build start"
             sh 'mvn -B -V -U -e clean package'
         }
     }
