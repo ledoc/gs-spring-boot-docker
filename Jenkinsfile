@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+    options {
+        timestamps()
+    }
+    environment {
+        IMAGE = "h3rv3/gs-spring-boot-docker"
+        REGISTRY = "https://registry.hub.docker.com"
+    }
+    stages {
+        stage('Build') {
+            sh 'mvn -B -V -U -e clean package'
+        }
+    }
+}
