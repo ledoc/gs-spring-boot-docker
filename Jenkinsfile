@@ -38,12 +38,14 @@ pipeline {
             }
         }
 	stage('Deploy Docker Image') {
+	    steps {
 		docker.withRegistry("${env.REGISTRY}", 'docker-hub-entree') {
                     image.push("${GIT_HASH}")
                     if ( "${env.BRANCH_NAME}" == "master" ) {
                 	    image.push("LATEST")
                     }
                 }
+	    }
 	}
     }
 }
