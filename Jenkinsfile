@@ -13,6 +13,16 @@ pipeline {
         REGISTRY = "https://registry.hub.docker.com"
     }
     stages {
+        stage('prep') {
+            steps {
+                script {
+                    env.GIT_HASH = sh(
+                        script: "git show --oneline | head -1 | cut -d' ' -f1",
+                        returnStdout: true
+                    ).trim()
+                }
+            }
+        }
         stage('Build') {
 		steps {
 		    println "build lance"
@@ -27,5 +37,14 @@ pipeline {
                 }
             }
         }
+	stage('Deploy Docker Image') {
+		docker.withRegistry("${env.REGISTRY}", 'docker-hub-entree') {
+                    image.push("${GIT_HASH}")
+                    if ( "${env.BRANCH_NAME}" == "master" ) {
+                	    image.push("LATEST")
+                    }
+                }
+                currentBuild.result = "SUCCESS"
+	}
     }
 }
