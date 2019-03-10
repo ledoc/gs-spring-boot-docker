@@ -1,14 +1,12 @@
 pipeline {
-    agent any
-    
-    triggers {
-        pollSCM('* * * * *')
-    }
     agent {
         docker {
-            image 'maven:3-alpine' 
-            args '-v /home/marvin/.m2:/root/.m2' 
+            image 'maven:3-alpine'
+            args '-v /home/marvin/.m2:/root/.m2'
         }
+    }
+    triggers {
+        pollSCM('* * * * *')
     }
     options {
         disableConcurrentBuilds()
