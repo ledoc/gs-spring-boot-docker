@@ -27,7 +27,7 @@ pipeline {
         stage('Build') {
 		steps {
 		    println "build lance"
-	            sh 'mvn -B -V -U -e clean package'
+	            sh 'mvn -B -V -U -X -e clean package'
 		}
         }
         stage('build Docker Image') {
