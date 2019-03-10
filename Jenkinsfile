@@ -32,7 +32,7 @@ pipeline {
         }
         stage('build Docker Image') {
 	    agent {
-                docker { image 'docker:stable-dind' }
+             { image 'docker:stable-dind' 
             }
             steps {
                 script {
@@ -44,7 +44,7 @@ pipeline {
 	stage('Deploy Docker Image') {
 	    steps {
                 agent {
-                    docker { image 'docker:stable-dind' }
+                    image 'docker:stable-dind'
                 }
 
 		script {
