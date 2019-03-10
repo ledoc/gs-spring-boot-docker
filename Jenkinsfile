@@ -31,6 +31,9 @@ pipeline {
 		}
         }
         stage('build Docker Image') {
+	    agent {
+                docker { image 'docker:stable-dind' }
+            }
             steps {
                 script {
                     image = docker.build("${IMAGE}")
@@ -40,6 +43,10 @@ pipeline {
         }
 	stage('Deploy Docker Image') {
 	    steps {
+                agent {
+                    docker { image 'docker:stable-dind' }
+                }
+
 		script {
 
 			docker.withRegistry("${env.REGISTRY}", 'docker-hub-entree') {
