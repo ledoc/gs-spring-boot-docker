@@ -4,6 +4,12 @@ pipeline {
     triggers {
         pollSCM('* * * * *')
     }
+    agent {
+        docker {
+            image 'maven:3-alpine' 
+            args '-v /home/marvin/.m2:/root/.m2' 
+        }
+    }
     options {
         disableConcurrentBuilds()
         timestamps()
