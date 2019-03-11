@@ -31,9 +31,6 @@ pipeline {
 		}
         }
         stage('build Docker Image') {
-	    agent {
-             { image 'docker:stable-dind' 
-            }
             steps {
                 script {
                     image = docker.build("${IMAGE}")
@@ -43,21 +40,15 @@ pipeline {
         }
 	stage('Deploy Docker Image') {
 	    steps {
-                agent {
-                    image 'docker:stable-dind'
-                }
-
 		script {
-
-			docker.withRegistry("${env.REGISTRY}", 'docker-hub-entree') {
-        	            image.push("${GIT_HASH}")
-                	    if ( "${env.BRANCH_NAME}" == "master" ) {
-                		    image.push("LATEST")
-		
-                	    }
-               		 }
-		}
-	    }
+		    docker.withRegistry("${env.REGISTRY}", 'docker-hub-entree') {
+                        image.push("${GIT_HASH}")
+                        if ( "${env.BRANCH_NAME}" == "master" ) {
+                            image.push("LATEST")
+               	        }
+                    }
+	        }
+            }
 	}
     }
 }
